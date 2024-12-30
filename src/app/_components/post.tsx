@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import {useState} from "react";
 
-import { api } from "@/trpc/react";
+import {api} from "@/trpc/react";
 
 export function LatestPost() {
   const [latestPost] = api.post.getLatest.useSuspenseQuery();
@@ -24,9 +24,9 @@ export function LatestPost() {
         <p>You have no posts yet.</p>
       )}
       <form
-        onSubmit={(e) => {
+        onSubmit={e => {
           e.preventDefault();
-          createPost.mutate({ name });
+          createPost.mutate({name});
         }}
         className="flex flex-col gap-2"
       >
@@ -34,7 +34,7 @@ export function LatestPost() {
           type="text"
           placeholder="Title"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={e => setName(e.target.value)}
           className="w-full rounded-full bg-white/10 px-4 py-2 text-white"
         />
         <button
