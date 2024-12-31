@@ -1,5 +1,10 @@
-import {FlatCompat} from "@eslint/eslintrc";
+import { FlatCompat } from "@eslint/eslintrc";
+import checkFile from "eslint-plugin-check-file";
 import tseslint from "typescript-eslint";
+
+
+
+
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -17,6 +22,9 @@ export default tseslint.config(
       ...tseslint.configs.recommendedTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
     ],
+    plugins: {
+      "check-file": checkFile,
+    },
     rules: {
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
@@ -35,7 +43,28 @@ export default tseslint.config(
       semi: ["error"],
       quotes: ["error", "double"],
       "no-undef": ["warn"],
-      "no-unused-vars": ["warn"],
+
+      "check-file/filename-naming-convention": [
+        "error",
+        {
+          "**/*.{js,jsx,ts,tsx}": "KEBAB_CASE",
+        },
+        {
+          ignoreMiddleExtensions: true,
+        },
+      ],
+      "check-file/folder-naming-convention": [
+        "error",
+        {
+          "src/**/": "NEXT_JS_APP_ROUTER_CASE",
+        },
+        {
+          //
+          errorMessage:
+            // eslint-disable-next-line quotes
+            `The folder "{{ target }}" does not match the KEBAB_CASE pattern`,
+        },
+      ],
     },
   },
   {
