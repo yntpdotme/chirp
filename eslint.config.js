@@ -42,7 +42,6 @@ export default tseslint.config(
       "prefer-template": ["error"],
       semi: ["error"],
       quotes: ["error", "double"],
-      "no-undef": ["warn"],
 
       "check-file/filename-naming-convention": [
         "error",
