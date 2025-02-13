@@ -1,19 +1,27 @@
-import {SignUpButton, SignedIn, SignedOut, UserButton} from "@clerk/nextjs";
+import {SignInButton, SignedIn, SignedOut, UserButton} from "@clerk/nextjs";
+
+import {Button} from "@/components/ui/button";
 
 import Logo from "./logo";
 
 const navbar = () => {
   return (
     <nav className="flex w-full items-center justify-between gap-5 px-6 py-4 sm:px-12">
-      <Logo />
+      <Logo
+        classNames={{
+          base: "scale-110 gap-2",
+          image: "text-[]",
+          text: "text-xl",
+        }}
+      />
 
       <div>
         <SignedOut>
-          <SignUpButton>
-            <button className="bg-black text-white rounded-lg font-medium text-sm h-9 px-4 cursor-pointer">
+          <SignInButton>
+            <Button className="rounded-lg cursor-pointer px-4">
               Get Started
-            </button>
-          </SignUpButton>
+            </Button>
+          </SignInButton>
         </SignedOut>
         <SignedIn>
           <UserButton />

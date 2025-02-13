@@ -1,10 +1,6 @@
-import { FlatCompat } from "@eslint/eslintrc";
+import {FlatCompat} from "@eslint/eslintrc";
 import checkFile from "eslint-plugin-check-file";
 import tseslint from "typescript-eslint";
-
-
-
-
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -12,7 +8,7 @@ const compat = new FlatCompat({
 
 export default tseslint.config(
   {
-    ignores: [".next"],
+    ignores: [".next", "@/components/ui/**/*"],
   },
   ...compat.extends("next/core-web-vitals"),
   {
@@ -25,6 +21,7 @@ export default tseslint.config(
     plugins: {
       "check-file": checkFile,
     },
+
     rules: {
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
