@@ -1,11 +1,10 @@
 import {type Metadata} from "next";
 import {Geist, Montserrat} from "next/font/google";
 
-import {ClerkProvider} from "@clerk/nextjs";
-
-import Navbar from "@/app/_components/navbar";
 import "@/styles/globals.css";
-import {TRPCReactProvider} from "@/trpc/react";
+
+import Navbar from "./_components/navbar";
+import Providers from "./_components/providers";
 
 export const metadata: Metadata = {
   title: "Chirp",
@@ -27,17 +26,19 @@ export default function RootLayout({
   children,
 }: Readonly<{children: React.ReactNode}>) {
   return (
-    <ClerkProvider>
-      <html lang="en" className={`${geist.variable} ${montserrat.variable}`}>
-        <TRPCReactProvider>
-          <body className="flex h-[100dvh] flex-col">
-            <header>
-              <Navbar />
-            </header>
-            <main className="flex-grow">{children}</main>
-          </body>
-        </TRPCReactProvider>
-      </html>
-    </ClerkProvider>
+    <html
+      lang="en"
+      className={`${geist.variable} ${montserrat.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="flex h-[100dvh] flex-col">
+        <Providers>
+          <header>
+            <Navbar />
+          </header>
+          <main className="flex-grow">{children}</main>
+        </Providers>
+      </body>
+    </html>
   );
 }

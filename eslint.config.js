@@ -8,7 +8,7 @@ const compat = new FlatCompat({
 
 export default tseslint.config(
   {
-    ignores: [".next", "@/components/ui/**/*"],
+    ignores: [".next", "./src/components/ui/**/*"],
   },
   ...compat.extends("next/core-web-vitals"),
   {
@@ -56,9 +56,7 @@ export default tseslint.config(
         },
         {
           //
-          errorMessage:
-            // eslint-disable-next-line quotes
-            `The folder "{{ target }}" does not match the KEBAB_CASE pattern`,
+          errorMessage: `The folder "{{ target }}" does not match the KEBAB_CASE pattern`,
         },
       ],
     },
