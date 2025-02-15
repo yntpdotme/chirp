@@ -5,9 +5,9 @@ import {Button} from "@/components/ui/button";
 import Logo from "./logo";
 import {ThemeSwitcher} from "./theme-switcher";
 
-const navbar = () => {
+const Navbar = () => {
   return (
-    <nav className="flex w-full items-center justify-between gap-5 px-6 py-4 sm:px-12">
+    <nav className="flex w-full items-center justify-between gap-5 px-6 py-4 lg:px-8 border-x border-dashed max-w-4xl mx-auto">
       <Logo
         classNames={{
           image: "text-[var(--primary)] dark:text-white",
@@ -21,16 +21,23 @@ const navbar = () => {
         <SignedOut>
           <SignInButton>
             <Button className="rounded-lg cursor-pointer px-4">
-              Get Started
+              Let&apos;s Chirp
             </Button>
           </SignInButton>
         </SignedOut>
         <SignedIn>
-          <UserButton />
+          <UserButton
+            appearance={{
+              elements: {
+                avatarBox: "!size-8 !rounded-md",
+                userButtonAvatarBox: "!size-8 !rounded-md",
+              },
+            }}
+          />
         </SignedIn>
       </div>
     </nav>
   );
 };
 
-export default navbar;
+export default Navbar;

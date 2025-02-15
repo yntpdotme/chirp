@@ -13,8 +13,8 @@ type LogoProps = {
 };
 
 const Logo = ({
-  width = 36,
-  height = 36,
+  width = 32,
+  height = 32,
   classNames = {base: "", image: ""},
 }: LogoProps) => {
   return (

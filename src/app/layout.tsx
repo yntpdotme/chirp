@@ -3,6 +3,7 @@ import {Geist, Montserrat} from "next/font/google";
 
 import "@/styles/globals.css";
 
+import Footer from "./_components/footer";
 import Navbar from "./_components/navbar";
 import Providers from "./_components/providers";
 
@@ -31,12 +32,19 @@ export default function RootLayout({
       className={`${geist.variable} ${montserrat.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex h-[100dvh] flex-col">
+      <body className="flex h-[100dvh] flex-col bg-[var(--background)]">
         <Providers>
-          <header>
+          <header className="sticky top-0 inset-x-0 z-50 border-b border-dashed">
             <Navbar />
           </header>
-          <main className="flex-grow">{children}</main>
+
+          <div className="flex flex-col flex-grow">
+            <main className="flex-grow overflow-y-auto">{children}</main>
+
+            <footer>
+              <Footer />
+            </footer>
+          </div>
         </Providers>
       </body>
     </html>
