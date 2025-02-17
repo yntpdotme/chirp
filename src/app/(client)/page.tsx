@@ -1,16 +1,18 @@
 import type {Metadata} from "next";
 
-import {LatestPost} from "@/app/_components/post";
+import {Posts} from "@/app/(client)/_components/posts";
 import {HydrateClient, api} from "@/trpc/server";
+import CreatePostWizard from "./_components/create-post-wizard";
 
 export default async function Home() {
-  void api.post.getLatest.prefetch();
+  void api.post.getAll.prefetch();
 
   return (
     <HydrateClient>
       <section className="flex justify-center border-b border-dashed overflow-y-auto h-full">
-        <div className="flex flex-col items-center justify-center px-6 lg:px-8 border-x max-w-4xl w-full border-dashed">
-          <LatestPost />
+        <div className="flex flex-col border-x max-w-4xl w-full border-dashed">
+          <CreatePostWizard />
+          <Posts />
         </div>
       </section>
     </HydrateClient>
