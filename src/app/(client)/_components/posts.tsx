@@ -18,7 +18,7 @@ type PostWithAuthor = RouterOutputs["post"]["getAll"][number];
 const PostView = ({post}: {post: PostWithAuthor}) => {
   return (
     <article className="flex flex-col gap-2.5 px-6 lg:px-8 border-b border-dashed py-4">
-      <div className="flex items-center justify-between gap-5">
+      <div className="flex gap-5">
         <Image
           src={post.author.imageUrl}
           alt={post.author.username ?? post.author.fullName}

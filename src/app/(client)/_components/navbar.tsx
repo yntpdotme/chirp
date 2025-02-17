@@ -15,26 +15,29 @@ const Navbar = () => {
         }}
       />
 
-      <div className="flex gap-2.5">
+      <div className="flex items-center gap-2.5">
         <ThemeSwitcher />
 
-        <SignedOut>
-          <SignInButton>
-            <Button className="rounded-lg cursor-pointer px-4">
-              Let&apos;s Chirp
-            </Button>
-          </SignInButton>
-        </SignedOut>
-        <SignedIn>
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: "!size-8 !rounded-md",
-                userButtonAvatarBox: "!size-8 !rounded-md",
-              },
-            }}
-          />
-        </SignedIn>
+        <div className="min-w-8 flex">
+          <SignedOut>
+            <SignInButton>
+              <Button className="rounded-lg cursor-pointer px-4">
+                Let&apos;s Chirp
+              </Button>
+            </SignInButton>
+          </SignedOut>
+
+          <SignedIn>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "!size-8 !rounded-md",
+                  userButtonAvatarBox: "!size-8 !rounded-md",
+                },
+              }}
+            />
+          </SignedIn>
+        </div>
       </div>
     </nav>
   );
