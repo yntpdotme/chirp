@@ -16,7 +16,7 @@ export function ThemeSwitcher() {
     <Button
       variant="ghost"
       size="icon"
-      className="group/toggle extend-touch-target "
+      className="group/toggle extend-touch-target cursor-pointer"
       onClick={toggleTheme}
       title="Toggle theme"
     >

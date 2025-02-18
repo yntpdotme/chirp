@@ -1,7 +1,8 @@
 import type {Metadata} from "next";
 
-import {Posts} from "@/app/(client)/_components/posts";
+import {Posts} from "@/app/_components/posts";
 import {HydrateClient, api} from "@/trpc/server";
+
 import CreatePostWizard from "./_components/create-post-wizard";
 
 export default async function Home() {
