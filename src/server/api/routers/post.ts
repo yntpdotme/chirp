@@ -1,7 +1,11 @@
 import {type User, clerkClient} from "@clerk/nextjs/server";
-import {z} from "zod";
+import {z} from "zod/v4";
 
-import {createTRPCRouter, publicProcedure} from "@/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 
 const filterUserForClient = (user: User) => {
   return {
@@ -32,13 +36,17 @@ export const postRouter = createTRPCRouter({
     }));
   }),
 
-  create: publicProcedure
-    .input(z.object({content: z.string().min(1), userId: z.string()}))
+  create: protectedProcedure
+    .input(
+      z.object({
+        content: z.emoji().min(1).max(180),
+      })
+    )
     .mutation(async ({ctx, input}) => {
       return ctx.db.post.create({
         data: {
           content: input.content,
-          authorId: input.userId,
+          authorId: ctx.auth.userId,
         },
       });
     }),
