@@ -33,7 +33,7 @@ export default function RootLayout({
       className={`${geist.variable} ${montserrat.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex h-[100dvh] flex-col bg-[var(--background)]">
+      <body className="flex h-[100dvh] flex-col bg-[var(--background)] overscroll-none">
         <Providers>
           <header className="sticky top-0 inset-x-0 z-50 border-b border-dashed">
             <Navbar />
