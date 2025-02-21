@@ -1,6 +1,7 @@
 import {type Metadata} from "next";
 import {Geist, Montserrat} from "next/font/google";
 
+import {Toaster} from "@/components/ui/sonner";
 import "@/styles/globals.css";
 
 import Footer from "./_components/footer";
@@ -46,6 +47,7 @@ export default function RootLayout({
             </footer>
           </div>
         </Providers>
+        <Toaster richColors />
       </body>
     </html>
   );

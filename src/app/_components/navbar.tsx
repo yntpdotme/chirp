@@ -7,7 +7,7 @@ import {ThemeSwitcher} from "./theme-switcher";
 
 const Navbar = () => {
   return (
-    <nav className="flex w-full items-center justify-between gap-5 px-6 py-4 lg:px-8 border-x border-dashed max-w-4xl mx-auto">
+    <nav className="flex w-full items-center justify-between gap-5 px-6 py-4 lg:px-8 border-x border-dashed max-w-4xl mx-auto bg-background">
       <Logo
         classNames={{
           image: "text-[var(--primary)] dark:text-white",

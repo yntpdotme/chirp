@@ -5,7 +5,8 @@ import Image from "next/image";
 import {useUser} from "@clerk/nextjs";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
-import {z} from "zod/v4";
+import {toast} from "sonner";
+import z from "zod/v4";
 
 import {Button} from "@/components/ui/button";
 import {
@@ -59,6 +60,14 @@ const CreatePostWizard = () => {
       await utils.post.invalidate();
       form.reset();
     },
+    onError: err => {
+      console.log(err.data);
+      const errorMsg = err.data?.zodError?.fieldErrors?.content;
+      if (errorMsg?.[0]) toast.error(errorMsg[0]);
+      else if (err.data?.code === "TOO_MANY_REQUESTS") {
+        toast.error("You chirped too fast! Please try again later.");
+      } else toast.error("Filed to post! Please try again later.");
+    },
   });
 
   const onSubmit = (values: FormData) => {
@@ -109,7 +118,7 @@ const CreatePostWizard = () => {
           className="cursor-pointer min-w-28"
           disabled={createPost.isPending}
         >
-          Post
+          {createPost.isPending ? "Posting..." : "Post"}
         </Button>
       </form>
     </Form>

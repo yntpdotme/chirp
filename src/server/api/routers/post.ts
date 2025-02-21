@@ -2,7 +2,7 @@ import {type User, clerkClient} from "@clerk/nextjs/server";
 import {TRPCError} from "@trpc/server";
 import {Ratelimit} from "@upstash/ratelimit";
 import {Redis} from "@upstash/redis";
-import {z} from "zod/v4";
+import {z} from "zod";
 
 import {
   createTRPCRouter,
@@ -48,7 +48,7 @@ export const postRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        content: z.emoji().min(1).max(180),
+        content: z.string().emoji("Only emojis are allowed").min(1).max(180),
       })
     )
     .mutation(async ({ctx, input}) => {
