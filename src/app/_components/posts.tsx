@@ -20,39 +20,44 @@ const PostView = ({post}: {post: PostWithAuthor}) => {
     post.author.username ??
     post.author.fullName.trim().toLowerCase().replace(/\s+/g, "_");
 
+  const handleProfileClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(ROUTES.PROFILE(username));
+  };
+
   return (
-    <article
-      className="flex flex-col gap-2.5 px-6 lg:px-8 border-t border-dashed py-4 hover:bg-gray-100 dark:hover:bg-primary/2 cursor-pointer"
-      onClick={() => {
-        router.push(ROUTES.POST(post.data.id));
-      }}
-    >
-      <div className="flex gap-5 items-start">
-        <Link href={ROUTES.PROFILE(username)}>
+    <Link href={ROUTES.POST(post.data.id)}>
+      <article className="flex flex-col gap-2.5 px-6 lg:px-8 border-t border-dashed py-4 hover:bg-gray-50 dark:hover:bg-primary/2">
+        <div className="flex gap-5 items-start">
           <Image
             src={post.author.imageUrl}
             alt={post.author.username ?? post.author.fullName}
-            className="rounded-lg"
+            className="rounded-lg z-10"
             width={60}
             height={60}
             quality={100}
+            onClick={handleProfileClick}
           />
-        </Link>
-        <div className="flex flex-col flex-grow gap-1">
-          <span className="flex gap-1 items-center">
-            <Link href={ROUTES.PROFILE(username)}>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+
+          <div className="flex flex-col flex-grow gap-1">
+            <span className="flex gap-1 items-center">
+              <p
+                className="text-sm font-medium text-gray-600 dark:text-gray-300"
+                onClick={handleProfileClick}
+              >
                 {`@${username}`}
               </p>
-            </Link>
-            <p className="text-sm text-muted-foreground font-light">
-              · {dayjs(post.data.createdAt).fromNow()}
-            </p>
-          </span>
-          <p className="text-2xl">{post.data.content}</p>
+
+              <p className="text-sm text-muted-foreground font-light">
+                · {dayjs(post.data.createdAt).fromNow()}
+              </p>
+            </span>
+            <p className="text-2xl">{post.data.content}</p>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 };
 
