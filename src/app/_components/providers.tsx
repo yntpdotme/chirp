@@ -1,9 +1,9 @@
-import type { ReactNode } from "react";
+import type {ReactNode} from "react";
 
-import { ClerkProvider } from "@clerk/nextjs";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import {ClerkProvider} from "@clerk/nextjs";
+import {ThemeProvider as NextThemesProvider} from "next-themes";
 
-import { TRPCReactProvider } from "@/trpc/react";
+import {TRPCReactProvider} from "@/trpc/react";
 
 const Providers = ({children}: {children: ReactNode}) => {
   return (
@@ -15,9 +15,7 @@ const Providers = ({children}: {children: ReactNode}) => {
         disableTransitionOnChange
       >
         <ClerkProvider>
-          <TRPCReactProvider>
-            {children}
-          </TRPCReactProvider>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
         </ClerkProvider>
       </NextThemesProvider>
     </>
