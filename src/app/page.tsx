@@ -10,7 +10,7 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <section className="flex justify-center border-b border-dashed overflow-y-auto h-full">
+      <section className="flex justify-center overflow-y-auto h-full">
         <div className="flex flex-col border-x max-w-4xl w-full border-dashed">
           <CreatePostWizard />
           <Posts />

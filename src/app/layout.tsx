@@ -42,7 +42,7 @@ export default function RootLayout({
           <div className="flex flex-col flex-grow">
             <main className="flex-grow overflow-y-auto">{children}</main>
 
-            <footer>
+            <footer className="border-t border-dashed">
               <Footer />
             </footer>
           </div>
