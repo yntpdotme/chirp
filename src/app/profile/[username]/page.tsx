@@ -1,7 +1,29 @@
 import Image from "next/image";
 import {notFound} from "next/navigation";
 
+import PostView from "@/components/posts/postview";
 import {api} from "@/trpc/server";
+
+const ProfileFeed = async ({userId}: {userId: string}) => {
+  const posts = await api.post.getPostByUserId({userId});
+
+  if (!posts || posts.length == 0)
+    return (
+      <div className="size-full px-6 lg:px-8 pt-10 pb-4 border-t border-dashed text-muted-foreground">
+        <pre>User has not chirped yet.</pre>
+      </div>
+    );
+
+  return (
+    <div className="w-full">
+      <div>
+        {posts.map(post => (
+          <PostView key={post.data.id} post={post} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const ProfilePage = async ({params}: RouteParams) => {
   const {username} = await params;
@@ -11,6 +33,10 @@ const ProfilePage = async ({params}: RouteParams) => {
     username,
   });
   if (!user) notFound();
+
+  const postCount = await api.post.getPostCountByUserId({
+    userId: user.id,
+  });
 
   return (
     <section className="flex h-full flex-col items-center justify-center">
@@ -26,12 +52,13 @@ const ProfilePage = async ({params}: RouteParams) => {
             quality={100}
           />
         </div>
-        <div className="px-6 lg:px-8 pt-20 pb-4 border-b border-dashed">
+        <div className="px-6 lg:px-8 pt-20 pb-4">
           <p className="text-2xl font-medium text-gray-600 dark:text-gray-300 font-montserrat tracking-tight">
             @{user.username ?? username}
           </p>
-          <p className="mt-3 text-gray-600 dark:text-gray-300">102 chirps</p>
+          <p className="mt-3 text-muted-foreground">{postCount} chirps</p>
         </div>
+        <ProfileFeed userId={user.id} />
       </div>
     </section>
   );

@@ -1,72 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import {useRouter} from "next/navigation";
-
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-
-import ROUTES from "@/constants/routes";
-import {type RouterOutputs, api} from "@/trpc/react";
-
-dayjs.extend(relativeTime);
-
-type PostWithAuthor = RouterOutputs["post"]["getAll"][number];
-
-const PostView = ({post}: {post: PostWithAuthor}) => {
-  const router = useRouter();
-  const username =
-    post.author.username ??
-    post.author.fullName.trim().toLowerCase().replace(/\s+/g, "_");
-
-  const handleProfileClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    router.push(ROUTES.PROFILE(username));
-  };
-
-  return (
-    <Link href={ROUTES.POST(post.data.id)}>
-      <article className="flex flex-col gap-2.5 px-6 lg:px-8 border-t border-dashed py-4 hover:bg-gray-50 dark:hover:bg-primary/2">
-        <div className="flex gap-5 items-start">
-          <Image
-            src={post.author.imageUrl}
-            alt={post.author.username ?? post.author.fullName}
-            className="rounded-lg z-10"
-            width={60}
-            height={60}
-            quality={100}
-            onClick={handleProfileClick}
-          />
-
-          <div className="flex flex-col flex-grow gap-1">
-            <span className="flex gap-1 items-center">
-              <p
-                className="text-sm font-medium text-gray-600 dark:text-gray-300"
-                onClick={handleProfileClick}
-              >
-                {`@${username}`}
-              </p>
-
-              <p className="text-sm text-muted-foreground font-light">
-                · {dayjs(post.data.createdAt).fromNow()}
-              </p>
-            </span>
-            <p className="text-2xl">{post.data.content}</p>
-          </div>
-        </div>
-      </article>
-    </Link>
-  );
-};
+import PostView from "@/components/posts/postview";
+import {api} from "@/trpc/react";
 
 export function Posts() {
   const [posts] = api.post.getAll.useSuspenseQuery();
 
   return (
     <div className="w-full">
-      <div className="flex flex-col gap-4 px-6 lg:px-8 py-4">
+      <div className="flex flex-col justify-center gap-4 px-6 lg:px-8 py-4 h-24">
         <h1 className="text-xl text-center font-montserrat font-light">
           Every chirp counts.
         </h1>
@@ -79,7 +21,9 @@ export function Posts() {
           ))}
         </div>
       ) : (
-        <pre>There are no posts yet.</pre>
+        <div className="px-6 lg:px-8 pt-10 pb-4 text-center text-muted-foreground">
+          <pre>No chirps yet. Be the first to chirp!</pre>
+        </div>
       )}
     </div>
   );

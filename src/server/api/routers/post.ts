@@ -1,4 +1,5 @@
 import {clerkClient} from "@clerk/nextjs/server";
+import type {Post} from "@prisma/client";
 import {TRPCError} from "@trpc/server";
 import {Ratelimit} from "@upstash/ratelimit";
 import {Redis} from "@upstash/redis";
@@ -17,6 +18,20 @@ const ratelimit = new Ratelimit({
   limiter: Ratelimit.fixedWindow(3, "60 s"),
 });
 
+const addUsersDataToPosts = async (posts: Post[]) => {
+  const clerk = await clerkClient();
+  const {data} = await clerk.users.getUserList({
+    userId: posts.map(post => post.authorId),
+    limit: 100,
+  });
+  const users = data.map(filterUserForClient);
+
+  return posts.map(post => ({
+    data: post,
+    author: users.find(user => user.id === post.authorId)!,
+  }));
+};
+
 export const postRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ctx}) => {
     const posts = await ctx.db.post.findMany({
@@ -24,17 +39,7 @@ export const postRouter = createTRPCRouter({
       take: 100,
     });
 
-    const clerk = await clerkClient();
-    const {data} = await clerk.users.getUserList({
-      userId: posts.map(post => post.authorId),
-      limit: 100,
-    });
-    const users = data.map(filterUserForClient);
-
-    return posts.map(post => ({
-      data: post,
-      author: users.find(user => user.id === post.authorId)!,
-    }));
+    return addUsersDataToPosts(posts);
   }),
 
   create: protectedProcedure
@@ -53,6 +58,30 @@ export const postRouter = createTRPCRouter({
         data: {
           content: input.content,
           authorId,
+        },
+      });
+    }),
+
+  getPostByUserId: publicProcedure
+    .input(z.object({userId: z.string().min(1)}))
+    .query(async ({ctx, input}) => {
+      return ctx.db.post
+        .findMany({
+          orderBy: {createdAt: "desc"},
+          where: {
+            authorId: input.userId,
+          },
+          take: 100,
+        })
+        .then(addUsersDataToPosts);
+    }),
+
+  getPostCountByUserId: publicProcedure
+    .input(z.object({userId: z.string().min(1)}))
+    .query(({ctx, input}) => {
+      return ctx.db.post.count({
+        where: {
+          authorId: input.userId,
         },
       });
     }),
