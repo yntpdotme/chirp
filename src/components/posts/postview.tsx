@@ -8,13 +8,20 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import ROUTES from "@/constants/routes";
+import {cn} from "@/lib/utils";
 import type {RouterOutputs} from "@/trpc/react";
 
 dayjs.extend(relativeTime);
 
 type PostWithAuthor = RouterOutputs["post"]["getAll"][number];
 
-const PostView = ({post}: {post: PostWithAuthor}) => {
+const PostView = ({
+  post,
+  className,
+}: {
+  post: PostWithAuthor;
+  className?: string;
+}) => {
   const router = useRouter();
   const username =
     post.author.username ??
@@ -28,7 +35,12 @@ const PostView = ({post}: {post: PostWithAuthor}) => {
 
   return (
     <Link href={ROUTES.POST(post.data.id)}>
-      <article className="flex flex-col gap-2.5 px-6 lg:px-8 border-t border-dashed py-4 hover:bg-gray-50 dark:hover:bg-primary/2">
+      <article
+        className={cn(
+          "flex flex-col gap-2.5 border-t border-dashed py-4 hover:bg-gray-50 dark:hover:bg-primary/2 px-6 lg:px-8",
+          className
+        )}
+      >
         <div className="flex gap-5 items-start">
           <Image
             src={post.author.imageUrl}

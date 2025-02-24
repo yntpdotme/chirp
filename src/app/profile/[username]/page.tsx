@@ -65,3 +65,12 @@ const ProfilePage = async ({params}: RouteParams) => {
 };
 
 export default ProfilePage;
+
+export const generateMetadata = async ({params}: RouteParams) => {
+  const {username} = await params;
+
+  return {
+    title: `Chirp / @${username}`,
+    description: `(@${username}) chirps`,
+  };
+};

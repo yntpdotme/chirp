@@ -63,7 +63,7 @@ export const postRouter = createTRPCRouter({
     }),
 
   getPostByUserId: publicProcedure
-    .input(z.object({userId: z.string().min(1)}))
+    .input(z.object({userId: z.string()}))
     .query(async ({ctx, input}) => {
       return ctx.db.post
         .findMany({
@@ -77,12 +77,26 @@ export const postRouter = createTRPCRouter({
     }),
 
   getPostCountByUserId: publicProcedure
-    .input(z.object({userId: z.string().min(1)}))
+    .input(z.object({userId: z.string()}))
     .query(({ctx, input}) => {
       return ctx.db.post.count({
         where: {
           authorId: input.userId,
         },
       });
+    }),
+
+  getPostById: publicProcedure
+    .input(z.object({id: z.string()}))
+    .query(async ({ctx, input}) => {
+      const post = await ctx.db.post.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!post) throw new TRPCError({code: "NOT_FOUND"});
+
+      return (await addUsersDataToPosts([post]))[0];
     }),
 });
