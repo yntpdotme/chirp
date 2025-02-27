@@ -77,7 +77,9 @@
   },
   "lint-staged": {
     "*": [
-      "eslint --no-warn-ignored",
+      "eslint --no-warn-ignored"
+    ],
+    "*.{js,jsx,ts,tsx,json,css,md}": [
       "prettier --write"
     ]
   }
