@@ -8,12 +8,6 @@ import Footer from "./_components/footer";
 import Navbar from "./_components/navbar";
 import Providers from "./_components/providers";
 
-export const metadata: Metadata = {
-  title: "Chirp",
-  description: "Where emojis speak louder than words",
-  icons: [{rel: "icon", url: "/chirp.png"}],
-};
-
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist-sans",
@@ -52,3 +46,47 @@ export default function RootLayout({
     </html>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Chirp",
+  description: "Where emojis speak louder than words",
+  icons: [{rel: "icon", url: "/chirp.png"}],
+
+  generator: "Next.js",
+  applicationName: "Chirp",
+  referrer: "origin-when-cross-origin",
+
+  keywords: [
+    "chirp",
+    "chirping",
+    "emojis",
+    "social media",
+    "emoji reactions",
+    "emoji communities",
+    "emoji posts",
+  ],
+
+  authors: [{name: "Akash Kadlag", url: "https://yntp.me"}],
+  creator: "Akash Kadlag",
+  publisher: "Chirp",
+
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
