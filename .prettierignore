@@ -8,7 +8,9 @@ package-lock.json
 next-env.d.ts
 .env*
 tsconfig.json
-
+*.jpg
+*.png
+*.svg
 
 # Ignore directories
 node_modules
@@ -17,3 +19,4 @@ src/components/ui
 .next/*
 .git/*
 .prettierignore
+public
